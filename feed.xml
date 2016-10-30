@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Piotr Mroczek - Przemyślania z warszatu programisty</title>
+		<description>Przemyślania z warszatu programisty</description>
+		<link>/</link>
+		<atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+		
+			<item>
+				<title>Test z Mocha</title>
+				<description>&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;framework-do-testowania&quot;&gt;Framework do Testowania&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://cldup.com/xFVFxOioAU.svg&quot; alt=&quot;https://cldup.com/xFVFxOioAU.svg&quot; /&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Mocha jest frameworkiem do testowania w przeglądarce oraz pod NodeJS.  Tak wyglądają &lt;a href=&quot;https://mochajs.org/example/tests.html&quot;&gt;przykładowe testy&lt;/a&gt;  z oficjalnej dokumentacji. Ten zestaw  akurat odpala się w przęglądarce, ale ja napiszę test odpalany w NodeJS.&lt;/p&gt;
+
+&lt;p&gt;Będę potrzebować nowego projektu z zainstalowanym  Mocha.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;$ mkdir przykladowe-testy-w-Mocha
+$ cd przykladowe-testy-w-Mocha
+$ npm init -y
+Wrote to przykladowe-testy-w-Mocha/przykladowe-testy-w-Mocha/package.json:
+{
+  &quot;name&quot;: &quot;przykladowe-testy-w-Mocha&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;amp;&amp;amp; exit 1&quot;
+  },
+  &quot;keywords&quot;: [],
+  &quot;author&quot;: &quot;&quot;,
+  &quot;license&quot;: &quot;ISC&quot;
+}
+$ npm install mocha --save
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;test&quot;&gt;Test&lt;/h3&gt;
+
+&lt;p&gt;Wykonanie zestawu testów odpalamy w katalogu z projektem za pomocą polecenia mocha co powinno w tej chwili zakończy się błędem, bo przeież nie napisałem jeszcze żadnego scenariusza. 
+&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;$ mocha
+Warning: Could not find any test files matching pattern: test
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;
+Tworzę katalog tests i za pomocą edytora umieszczam tak plik o nazwie pierwszyTest.js  z następującą treścią: 
+&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;var assert = require('assert');
+describe('Array', function() {
+  describe('#indexOf()', function() {
+    it('should return -1 when the value is not present', function() {
+      assert.equal(-1, [1,2,3].indexOf(4));
+    });
+  });
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ mocha
+
+  Array
+    #indexOf()
+      ✓ should return -1 when the value is not present
+
+
+  1 passing (8ms)
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;gotowe&quot;&gt;Gotowe&lt;/h3&gt;
+&lt;p&gt;Dla wygody w pracy codziennej, podepenijmy jeszcze to polecenie pod NPM. Tak aby w przyszłości można było łatwo odpalić test w danym projekcie za pomoca npm test.&lt;/p&gt;
+
+&lt;p&gt;W tej chwili odpalenie testów za pośrednictwem npm będzie kończyć sie błędem: 
+&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;$ npm test
+$ 
+$ &amp;gt; przykladowe-testy-w-Mocha@1.0.0 test przykladowe-testy-w-Mocha/przykladowe-testy-w-Mocha
+$ &amp;gt; echo &quot;Error: no test specified&quot; &amp;amp;&amp;amp; exit 1
+
+Error: no test specified
+npm ERR! Test failed.  See above for more details.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;
+Zmieńmy to, modyfikując plik package.json na wzór:
+&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;mocha&quot;
+  }, 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;
+Po zapisaniu zmian, NPM powienień wiedzieć że testy powinien wywoływać za pomocą mocha: 
+&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;npm test
+
+&amp;gt; przykladowe-testy-w-Mocha@1.0.0 test /home/piotrmroczek/Blog/przykladowe-testy-w-Mocha/przykladowe-testy-w-Mocha
+&amp;gt; mocha
+
+
+
+  Array
+    #indexOf()
+      ✓ should return -1 when the value is not present
+
+
+  1 passing (7ms)
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;
+Jak widać Mocha jest łatwym w instalacji i dosyć prostym do zrozumienia frameworkiem. Po więcej informacji odsyłam do oficjalnej dokumentacji projektu:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://mochajs.org/&quot;&gt;MochaJS&lt;/a&gt;&lt;/p&gt;
+
+</description>
+				<pubDate>Sun, 30 Oct 2016 00:00:00 +0200</pubDate>
+				<link>/front/2016/10/30/Testy-z-Mocha.html</link>
+				<guid isPermaLink="true">/front/2016/10/30/Testy-z-Mocha.html</guid>
+			</item>
+		
+	</channel>
+</rss>
